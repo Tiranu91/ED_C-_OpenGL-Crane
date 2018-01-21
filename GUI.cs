@@ -70,7 +70,6 @@ namespace DemoOpenGLBasicsCS
             TKran kran_config = TKran.getInstance();
 
             double[] bla = { kran_config.PositionX, kran_config.PositionY, kran_config.PositionZ };
-            MessageBox.Show(kran_config.PositionX.ToString() + "\n" + kran_config.PositionY.ToString() + "\n" + kran_config.PositionZ.ToString());
 
 
             //kran_config.PositionX = Double.Parse(tb_x.Text);
@@ -88,14 +87,17 @@ namespace DemoOpenGLBasicsCS
                 return;
             }
 
-            trb_heben.Value = Convert.ToInt32(blub[2]);
+            if (blub[0] < 0 || blub[0] > 1.9 || blub[1] < 0 || blub[1] > 1.9 || blub[2] < 0.3 || blub[2] > 2.8) //Check value range
+                return;
+
+            //Heben
+            trb_heben.Value = Convert.ToInt32((3 - blub[2]) * 10);
 
 
-            trb_auslegen.Value = Convert.ToInt32(TMatrix.VektorLaenge(blub));
+            trb_auslegen.Value = Convert.ToInt32(TMatrix.VektorLaenge(new double[] { blub[0], blub[1] }) * 10);
 
             double angle = TMatrix.VectorWinkel(bla, blub);
-            MessageBox.Show(trb_drehen.Value.ToString());
-            MessageBox.Show("asf" + angle.ToString());
+
             if (TMatrix.Quadrant(bla) == 1 && TMatrix.Quadrant(blub) == 4)
             {
                 angle -= TMatrix.VectorWinkel(bla, new double[] { 5, 0, 0 });
@@ -117,7 +119,6 @@ namespace DemoOpenGLBasicsCS
                     trb_drehen.Value -= Convert.ToInt32(angle);
                 }
             }
-            MessageBox.Show(trb_drehen.Value.ToString());
 
             /*
             if (trb_drehen.Value > 360 || trb_drehen.Value < 0)

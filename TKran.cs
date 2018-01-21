@@ -36,26 +36,14 @@ namespace DemoOpenGLBasicsCS
         {
             get { return targetArmLength; }
             set {
-                //MessageBox.Show("set" + value);
-                /*
-                int olaf = Convert.ToInt32(value - targetArmLength);
-                double faktor = 1.0;
-                if (olaf == -1)
-                {
-                    faktor = 0.1;
-                }
-                else if (olaf == 1)
-                {
-                    faktor = 1.1;
-                }
-                else if (olaf > 1 || olaf < -1)
-                {
-                    faktor += (olaf / 10);
-                }
-                */
-                double[] positionausleger = { position[0], position[1]};    //Neues Array mit X und Y Koordinate
-                positionausleger = TMatrix.Verkuerzen(positionausleger, value - targetArmLength);   //Verkuerzungsmethode aufrufen, neue werte in Ausleherarry ablegen, differenz zwischen aktuellem und Zielwert uebergeben
-                position[0] = positionausleger[0];  //Veraenderte Wetre in Positionsarray ablegen
+                double val = 0.0;
+                if (value > targetArmLength)
+                    val = value / targetArmLength;
+                else
+                    val = 1 - value / targetArmLength;
+                double[] positionausleger = { position[0], position[1] };    //Neues Array mit X und Y Koordinate
+                positionausleger = TMatrix.Verkuerzen(positionausleger, val);   //Verkuerzungsmethode aufrufen, neue werte in Ausleherarry ablegen, differenz zwischen aktuellem und Zielwert uebergeben
+                position[0] = positionausleger[0];  //Veraenderte Werte in Positionsarray ablegen
                 position[1] = positionausleger[1];
                 targetArmLength = value;
 
